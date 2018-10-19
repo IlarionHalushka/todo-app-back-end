@@ -3,7 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import fileUpload from "express-fileupload";
 
-import { serverPort } from "./etc/config.json";
+import { serverPort } from "../config.json";
 
 import * as db from "./utils/DataBaseUtils";
 

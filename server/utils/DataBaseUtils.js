@@ -1,13 +1,11 @@
 import mongoose from "mongoose";
-import config from "./../etc/config.json";
+import config from "../../config.json";
 import "../models/Note";
 
 const Note = mongoose.model("Note");
 
 exports.setUpConnection = () => {
-  mongoose.connect(
-    `mongodb://${config.db.host}:${config.db.port}/${config.db.name}`
-  );
+  mongoose.connect(config.mongo.url);
 };
 
 exports.listNotes = () => {
