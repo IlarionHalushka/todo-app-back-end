@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import fileUpload from "express-fileupload";
+import fs from 'fs';
 
 import { serverPort } from "../config.json";
 
@@ -43,7 +44,13 @@ app.post("/upload", (req, res) => {
   let sampleFile = req.files.sampleFile;
   const _id = new Date().getTime();
 
-  sampleFile.mv("../application/uploads/" + _id, err => {
+  const uploadsDirectory = '../uploads';
+
+  if (!fs.existsSync(uploadsDirectory)){
+    fs.mkdirSync(uploadsDirectory);
+  }
+
+  sampleFile.mv(uploadsDirectory + "/" + _id, err => {
     if (err) return res.status(500).send(err);
 
     res.send("200", _id + "");
@@ -51,7 +58,7 @@ app.post("/upload", (req, res) => {
 });
 
 app.get("/upload/:id", (req, res) => {
-  let file = "../application/uploads/" + req.params.id;
+  let file = "../uploads/" + req.params.id;
   res.download(file);
 });
 
